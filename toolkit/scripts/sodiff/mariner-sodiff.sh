@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 # Required binaries:
 # rpm and dnf on Mariner
 # yum and yum-utils on Ubuntu
