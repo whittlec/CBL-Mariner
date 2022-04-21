@@ -216,14 +216,15 @@ func resolveSingleNode(cloner *rpmrepocloner.RpmRepoCloner, node *pkggraph.PkgNo
 
 	// If a package is  available locally, and it is part of the toolchain, mark it as a prebuilt so the scheduler knows it can use it
 	// immediately (especially for dynamic generator created capabilities)
-	if (preBuilt || prebuiltPackages[node.RpmPath]) && isToolchainPackage(node.RpmPath, toolchainPackages) {
-		logger.Log.Debugf("Using a prebuilt toolchain package to resolve this dependency")
-		prebuiltPackages[node.RpmPath] = true
-		node.State = pkggraph.StateUpToDate
-		node.Type = pkggraph.TypePreBuilt
-	} else {
-		node.State = pkggraph.StateCached
-	}
+	// if (preBuilt || prebuiltPackages[node.RpmPath]) && isToolchainPackage(node.RpmPath, toolchainPackages) {
+	// 	logger.Log.Debugf("Using a prebuilt toolchain package to resolve this dependency")
+	// 	prebuiltPackages[node.RpmPath] = true
+	// 	node.State = pkggraph.StateUpToDate
+	// 	node.Type = pkggraph.TypePreBuilt
+	// } else {
+	// 	node.State = pkggraph.StateCached
+	// }
+	node.State = pkggraph.StateCached
 
 	logger.Log.Infof("Choosing '%s' to provide '%s'.", filepath.Base(node.RpmPath), node.VersionedPkg.Name)
 
