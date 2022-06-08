@@ -20,7 +20,8 @@ import (
 //	- packagesNamesToRebuild,
 //	- local packages listed in the image config, and
 //	- kernels in the image config (if built locally).
-func CalculatePackagesToBuild(packagesNamesToBuild, packagesNamesToRebuild []string, inputGraphFile, imageConfig, baseDirPath string, nodeResolutionPreference pkggraph.NodeResolutionPreference) (packageVersToBuild []*pkgjson.PackageVer, err error) {
+//func CalculatePackagesToBuild(packagesNamesToBuild, packagesNamesToRebuild []string, inputGraphFile, imageConfig, baseDirPath string, nodeResolutionPreference pkggraph.NodeResolutionPreference) (packageVersToBuild []*pkgjson.PackageVer, err error) {
+func CalculatePackagesToBuild(packagesNamesToBuild, packagesNamesToRebuild []string, inputGraphFile, imageConfig, baseDirPath string, nodeResolutionPreference string) (packageVersToBuild []*pkgjson.PackageVer, err error) {
 	packageVersToBuild = convertPackageNamesIntoPackageVers(packagesNamesToBuild)
 	packageVersToBuild = append(packageVersToBuild, convertPackageNamesIntoPackageVers(packagesNamesToRebuild)...)
 
@@ -76,7 +77,7 @@ func extractPackagesFromConfig(configFile, baseDirPath string) (packageList []*p
 }
 
 // filterLocalPackagesOnly returns the subset of packageVersionsInConfig that only contains local packages.
-func filterLocalPackagesOnly(packageVersionsInConfig []*pkgjson.PackageVer, inputGraph string, nodeResolutionPreference pkggraph.NodeResolutionPreference) (filteredPackages []*pkgjson.PackageVer, err error) {
+func filterLocalPackagesOnly(packageVersionsInConfig []*pkgjson.PackageVer, inputGraph string, nodeResolutionPreference string) (filteredPackages []*pkgjson.PackageVer, err error) {
 	logger.Log.Debug("Filtering out external packages from list of packages extracted from the image config file.")
 
 	dependencyGraph := pkggraph.NewPkgGraph()
@@ -86,7 +87,8 @@ func filterLocalPackagesOnly(packageVersionsInConfig []*pkgjson.PackageVer, inpu
 	}
 
 	for _, pkgVer := range packageVersionsInConfig {
-		pkgNode, _ := dependencyGraph.FindBestPkgNode(pkgVer, nodeResolutionPreference)
+		//pkgNode, _ := dependencyGraph.FindBestPkgNode(pkgVer, nodeResolutionPreference)
+		pkgNode, _ := dependencyGraph.FindBestPkgNode(pkgVer, pkggraph.PreferHighestVersion)
 
 		// A pkgNode for a local package has the following characteristics:
 		// 1) The pkgNode exists in the graph (is not nil).

@@ -537,8 +537,10 @@ func (g *PkgGraph) FindDoubleConditionalPkgNodeFromPkg(pkgVer *pkgjson.PackageVe
 			// Local nodes have non-nil build nodes, Remote nodes have nil build nodes
 			if node.BuildNode != nil && nodeResolutionPreference == PreferLocalNode {
 				bestPreferredNode = node
+				logger.Log.Warnf("NOTE: this ('%s') is a local node: '%s'", node.BuildNode, pkgVer.Name)
 			} else if node.BuildNode == nil && (nodeResolutionPreference == PreferRemoteNode || nodeResolutionPreference == PreferHighestVersion) {
 				bestPreferredNode = node
+				logger.Log.Warnf("NOTE: this ('%s') is a remote node: '%s'", node.BuildNode, pkgVer.Name)
 			}
 
 			// Keep going, we want the highest version which satisfies both conditionals
@@ -550,18 +552,18 @@ func (g *PkgGraph) FindDoubleConditionalPkgNodeFromPkg(pkgVer *pkgjson.PackageVe
 		if nodeResolutionPreference == PreferHighestVersion {
 			// If pkgVer resolves to a remote node, and that node is never found during the build, we have no way to
 			// fall back to the local package at this time.
-			logger.Log.Warnf("Resolving '%s' to remote node '%s' instead of local node '%s'",
+			logger.Log.Warnf("NOTE: Resolving '%s' to remote node '%s' instead of local node '%s'",
 				pkgVer,
 				lookupEntry.RunNode.String(),
 				bestPreferredNode.RunNode.String())
 		} else if nodeResolutionPreference == PreferLocalNode {
-			logger.Log.Debugf("Resolving '%s' to local node '%s' instead of higher version remote node '%s' due to resolution preference",
+			logger.Log.Debugf("NOTE: Resolving '%s' to local node '%s' instead of higher version remote node '%s' due to resolution preference",
 				pkgVer,
 				bestPreferredNode.RunNode.String(),
 				lookupEntry.RunNode.String())
 			lookupEntry = bestPreferredNode
 		} else if nodeResolutionPreference == PreferRemoteNode {
-			logger.Log.Debugf("Resolving '%s' to remote node '%s' instead of higher version local node '%s' due to resolution preference",
+			logger.Log.Debugf("NOTE: Resolving '%s' to remote node '%s' instead of higher version local node '%s' due to resolution preference",
 				pkgVer,
 				bestPreferredNode.RunNode.String(),
 				lookupEntry.RunNode.String())
@@ -1098,7 +1100,7 @@ func (g *PkgGraph) AddGoalNode(goalName string, packages []*pkgjson.PackageVer, 
 		}
 		if existingNode == nil {
 			// Try again with a more general search
-			existingNode, err = g.FindBestPkgNode(pkg)
+			existingNode, err = g.FindBestPkgNode(pkg, PreferHighestVersion)
 			if err != nil {
 				return
 			}

@@ -78,7 +78,7 @@ func addUnresolvedPackage(g *pkggraph.PkgGraph, pkgVer *pkgjson.PackageVer) (new
 		return
 	}
 
-	nodes, err := g.FindBestPkgNode(pkgVer)
+	nodes, err := g.FindBestPkgNode(pkgVer, pkggraph.PreferHighestVersion)
 	if err != nil {
 		return
 	}
@@ -150,7 +150,7 @@ func addNodesForPackage(g *pkggraph.PkgGraph, pkgVer *pkgjson.PackageVer, pkg *p
 func addSingleDependency(g *pkggraph.PkgGraph, packageNode *pkggraph.PkgNode, dependency *pkgjson.PackageVer) (err error) {
 	var dependentNode *pkggraph.PkgNode
 	logger.Log.Tracef("Adding a dependency from %+v to %+v", packageNode.VersionedPkg, dependency)
-	nodes, err := g.FindBestPkgNode(dependency)
+	nodes, err := g.FindBestPkgNode(dependency, pkggraph.PreferHighestVersion)
 	if err != nil {
 		logger.Log.Errorf("Unable to check lookup list for %+v (%s)", dependency, err)
 		return err
