@@ -36,7 +36,7 @@ Summary:        KNEM: High-Performance Intra-Node MPI Communication
 Name:           knem
 # Update extended_release and nvidia_version with version updates
 Version:        1.1.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        BSD and GPLv2
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -44,7 +44,6 @@ Group:          System Environment/Libraries
 Source:         https://linux.mellanox.com/public/repo/bluefield/%{BF_VERSION}/extras/mlnx_ofed/5.6-1.0.3.3/SOURCES/%{name}_%{version}.%{nvidia_version}.orig.tar.gz#/%{name}-%{version}.tar.gz
 BuildRequires:  kernel-devel
 BuildRequires:  kmod
-Requires:       kernel
 Provides:       knem-mlnx = %{version}-%{release}
 Obsoletes:      knem-mlnx < %{version}-%{release}
 
@@ -167,6 +166,9 @@ fi
 /lib/modules/%{kver}/%{install_mod_dir}/
 
 %changelog
+* Mon Oct 24 2022 Rachel Menge <rachelmenge@microsoft.com> - 1.1.4-2
+- Remove Requires on kernel
+
 * Fri Jul 22 2022 Rachel Menge <rachelmenge@microsoft.com> - 1.1.4-1
 - Initial CBL-Mariner import from NVIDIA (license: GPLv2).
 - Lint spec to conform to Mariner
