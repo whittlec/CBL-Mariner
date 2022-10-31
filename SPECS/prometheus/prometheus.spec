@@ -2,8 +2,8 @@
 %global commit_version "d48f381d9a4e68c83283ce5233844807dfdc5ba5"
 
 Name:           prometheus
-Version:        2.36.0
-Release:        3%{?dist}
+Version:        2.37.0
+Release:        1%{?dist}
 Summary:        Prometheus monitoring system and time series database
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
