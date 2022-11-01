@@ -1,34 +1,30 @@
+Summary:        A CSS2 parsing library
+Name:           libcroco
+Version:        0.6.13
+Release:        6%{?dist}
+License:        LGPLv2
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-Name:             libcroco
-Summary:          A CSS2 parsing library
-Version:          0.6.13
-Release:          5%{?dist}
-License:          LGPLv2
-Url:              https://gitlab.gnome.org/Archive/libcroco
-Source:           https://gitlab.gnome.org/Archive/libcroco/-/archive/%{version}/%{name}-%{version}.tar.xz
-#Fedora specific patch
-Patch0:    libcroco-0.6.1-multilib.patch
-
+URL:            https://gitlab.gnome.org/Archive/libcroco
+Source:         https://gitlab.gnome.org/Archive/libcroco/-/archive/%{version}/%{name}-%{version}.tar.gz#/%{name}-%{version}.tar.xz
 BuildRequires:  gcc
-BuildRequires:    pkgconfig
-BuildRequires:    glib2-devel
-BuildRequires:    libxml2-devel
+BuildRequires:  glib2-devel
+BuildRequires:  libxml2-devel
+BuildRequires:  pkgconfig
 
 %description
 CSS2 parsing and manipulation library for GNOME
 
 %package devel
-Summary:          Libraries and include files for developing with libcroco
-Requires:         %{name}%{_isa} = %{version}-%{release}
+Summary:        Libraries and include files for developing with libcroco
+Requires:       %{name}%{_isa} = %{version}-%{release}
 
 %description devel
 This package provides the necessary development libraries and include
 files to allow you to develop with libcroco.
 
 %prep
-%setup -q
-%patch0 -p1 -b .multilib
+%autosetup
 
 %build
 %configure --disable-static
@@ -36,7 +32,7 @@ make %{?_smp_mflags} CFLAGS="$CFLAGS -fno-strict-aliasing"
 
 %install
 %make_install
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %check
 make check
@@ -57,6 +53,9 @@ make check
 %{_datadir}/gtk-doc/html/libcroco
 
 %changelog
+* Wed Oct 19 2022 Muhammad Falak <mwani@microsoft.com> - 0.6.13-6
+- Drop fedora specific patch
+
 * Wed Dec 08 2021 Thomas Crain <thcrain@microsoft.com> - 0.6.13-5
 - License verified
 

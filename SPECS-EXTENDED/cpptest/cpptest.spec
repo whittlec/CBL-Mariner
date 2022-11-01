@@ -1,16 +1,16 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
+Summary:        A portable and powerful and simple unit testing framework for C++
 Name:           cpptest
 Version:        1.1.2
-Release:        16%{?dist}
-Summary:        A portable and powerful and simple unit testing framework for C++
-
+Release:        20%{?dist}
 License:        LGPLv2+
-URL:            http://%{name}.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL:            https://%{name}.sourceforge.net/
+Source0:        https://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+BuildRequires:  doxygen
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
-BuildRequires:  doxygen
+BuildRequires:  make
 
 %description
 CppTest is a portable and powerful, yet simple, unit testing framework
@@ -25,25 +25,25 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
-
 %prep
 %setup -q
 #%patch0 -p1
 %build
+export CXXFLAGS="-std=c++14 %{optflags}"
 %configure --disable-static --enable-doc
-make %{?_smp_mflags} V=1
+%make_build
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
-
+make install DESTDIR=%{buildroot}
+find %{buildroot} -type f -name "*.la" -delete -print
 %ldconfig_scriptlets
 
 %files
-%doc NEWS COPYING AUTHORS ChangeLog
+%license COPYING
+%doc NEWS AUTHORS ChangeLog
 %{_libdir}/*.so.*
-%{_datadir}/doc/cpptest
+%{_docdir}/cpptest
 
 %files devel
 %doc doc/html
@@ -51,10 +51,23 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 
-
 %changelog
-* Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.2-16
-- Initial CBL-Mariner import from Fedora 32 (license: MIT).
+* Wed Oct 19 2022 Muhammad Falak <mwani@microsoft.com> - 1.1.2-20
+- Initial CBL-Mariner import from Fedora 36 (license: MIT).
+- Switch to `%make_build` instead of `make`
+- License verified
+
+* Wed Jan 19 2022 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.2-19
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
+
+* Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.2-18
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
+* Mon Jul 27 2020 Jeff Law <law@redhat.com> - 1.1.2-17
+- Force C++14 as code is not C++17 ready
+
+* Mon Jul 27 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.2-16
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
 * Tue Jan 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.2-15
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
