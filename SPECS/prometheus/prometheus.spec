@@ -24,7 +24,7 @@ configured targets at given intervals, evaluates rule expressions, displays the
 results, and can trigger alerts if some condition is observed to be true.
 
 %prep
-%setup -q -n prometheus-%{version}
+%setup -q
 
 %build
 /bin/true
