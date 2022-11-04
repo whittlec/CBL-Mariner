@@ -7,7 +7,7 @@ License:        ASL 2.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://prometheus.io
-Source0:        https://github.com/prometheus/prometheus/releases/download/v%{version}/prometheus-%{version}.linux-amd64.tar.gz
+Source0:        https://github.com/%{name}/%{name}/archive/refs/tags/v%{version}.tar.gz
 Source1:        %{name}.service
 Source2:        %{name}.default
 Requires(pre):  shadow-utils
