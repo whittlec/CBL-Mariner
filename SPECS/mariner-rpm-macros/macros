@@ -45,6 +45,9 @@
 %__spec_build_template	#!%{__spec_build_shell}\
 %{__spec_build_pre}\
 %{set_build_flags}\
+  %{?mariner_ccache_enabled:echo "mariner_ccache_enabled is set"}\
+  PATH="/usr/lib/ccache:$PATH" ; export PATH ; \
+  CCACHE_DIR="${CCACHE_DIR:-/ccache-prototype}" ; export CCACHE_DIR ; \
 %{nil}
 
 #
@@ -77,6 +80,7 @@
     %{_rpmconfigdir}/brp-strip %{__strip} \
     %{_rpmconfigdir}/brp-strip-debug-symbols %{__strip} \
     %{_rpmconfigdir}/brp-strip-unneeded %{__strip} \
+    ccache --show-stats --verbose \
     %{nil}
 
 %install %{?_enable_debug_packages:%{?buildsubdir:%{debug_package}}}\
