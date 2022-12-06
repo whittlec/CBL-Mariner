@@ -124,6 +124,7 @@ endif
 
 $(cached_file): $(graph_file) $(go-graphpkgfetcher) $(chroot_worker) $(pkggen_local_repo) $(depend_REPO_LIST) $(REPO_LIST) $(shell find $(CACHED_RPMS_DIR)/) $(pkggen_rpms) $(TOOLCHAIN_MANIFEST)
 	mkdir -p $(CACHED_RPMS_DIR)/cache && \
+	mkdir -p $(CCACHE_DIR) && \
 	$(go-graphpkgfetcher) \
 		--input=$(graph_file) \
 		--output-dir=$(CACHED_RPMS_DIR)/cache \
@@ -198,6 +199,7 @@ $(STATUS_FLAGS_DIR)/build-rpms.flag: $(preprocessed_file) $(chroot_worker) $(go-
 		--rpm-dir="$(RPMS_DIR)" \
 		--srpm-dir="$(SRPMS_DIR)" \
 		--cache-dir="$(CACHED_RPMS_DIR)/cache" \
+		--ccache-dir="$(CCACHE_DIR)" \
 		--build-logs-dir="$(rpmbuilding_logs_dir)" \
 		--dist-tag="$(DIST_TAG)" \
 		--distro-release-version="$(RELEASE_VERSION)" \

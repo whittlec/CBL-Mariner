@@ -42,6 +42,7 @@ var (
 	rpmsDirPath          = app.Flag("rpm-dir", "The directory to use as the local repo and to submit RPM packages to").Required().ExistingDir()
 	srpmsDirPath         = app.Flag("srpm-dir", "The output directory for source RPM packages").Required().String()
 	cacheDir             = app.Flag("cache-dir", "The cache directory containing downloaded dependency RPMS from CBL-Mariner Base").Required().ExistingDir()
+	ccacheDir            = app.Flag("ccache-dir", "The ccache dir").Required().ExistingDir()
 	noCleanup            = app.Flag("no-cleanup", "Whether or not to delete the chroot folder after the build is done").Bool()
 	distTag              = app.Flag("dist-tag", "The distribution tag the SPEC will be built with.").Required().String()
 	distroReleaseVersion = app.Flag("distro-release-version", "The distro release version that the SRPM will be built with").Required().String()
@@ -147,7 +148,7 @@ func buildSRPMInChroot(chrootDir, rpmDirPath, workerTar, srpmFile, repoFile, rpm
 
 	overlayMount, overlayExtraDirs := safechroot.NewOverlayMountPoint(chroot.RootDir(), overlaySource, chrootLocalRpmsDir, rpmDirPath, chrootLocalRpmsDir, overlayWorkDir)
 	rpmCacheMount := safechroot.NewMountPoint(*cacheDir, chrootLocalRpmsCacheDir, "", safechroot.BindMountPointFlags, "")
-	cCacheMount := safechroot.NewMountPoint("/home/drew/repos_official/main/ccache2/CBL-Mariner/build/rpm_cache/cache/ccache", chrootcCacheDir, "", safechroot.BindMountPointFlags, "")
+	cCacheMount := safechroot.NewMountPoint(*ccacheDir, chrootcCacheDir, "", safechroot.BindMountPointFlags, "")
 	mountPoints := []*safechroot.MountPoint{overlayMount, rpmCacheMount, cCacheMount}
 	extraDirs := append(overlayExtraDirs, chrootLocalRpmsCacheDir, chrootcCacheDir)
 

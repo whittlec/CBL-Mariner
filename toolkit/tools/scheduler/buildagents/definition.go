@@ -15,6 +15,7 @@ type BuildAgentConfig struct {
 	RpmDir    string
 	SrpmDir   string
 	CacheDir  string
+	CCacheDir string
 
 	DistTag              string
 	DistroReleaseVersion string

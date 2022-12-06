@@ -54,6 +54,7 @@ var (
 	rpmDir        = app.Flag("rpm-dir", "The directory to use as the local repo and to submit RPM packages to").Required().ExistingDir()
 	srpmDir       = app.Flag("srpm-dir", "The output directory for source RPM packages").Required().String()
 	cacheDir      = app.Flag("cache-dir", "The cache directory containing downloaded dependency RPMS from Mariner Base").Required().ExistingDir()
+	ccacheDir     = app.Flag("ccache-dir", "The ccache directory").Required().ExistingDir()
 	buildLogsDir  = app.Flag("build-logs-dir", "Directory to store package build logs").Required().ExistingDir()
 
 	imageConfig = app.Flag("image-config-file", "Optional image config file to extract a package list from.").String()
@@ -131,6 +132,7 @@ func main() {
 	buildAgentConfig := &buildagents.BuildAgentConfig{
 		Program:   *buildAgentProgram,
 		CacheDir:  *cacheDir,
+		CCacheDir:  *ccacheDir,
 		RepoFile:  *repoFile,
 		RpmDir:    *rpmDir,
 		SrpmDir:   *srpmDir,
