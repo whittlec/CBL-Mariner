@@ -104,6 +104,10 @@ func serializeChrootBuildAgentConfig(config *BuildAgentConfig, inputFile, logFil
 		serializedArgs = append(serializedArgs, "--run-check")
 	}
 
+	if config.UseCcache {
+		serializedArgs = append(serializedArgs, "--use-ccache")
+	}
+
 	for _, dependency := range dependencies {
 		serializedArgs = append(serializedArgs, fmt.Sprintf("--install-package=%s", dependency))
 	}

@@ -24,6 +24,7 @@ type BuildAgentConfig struct {
 
 	NoCleanup bool
 	RunCheck  bool
+	UseCcache bool
 
 	LogDir   string
 	LogLevel string

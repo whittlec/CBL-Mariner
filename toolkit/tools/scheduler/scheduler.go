@@ -146,6 +146,7 @@ func main() {
 
 		NoCleanup: *noCleanup,
 		RunCheck:  *runCheck,
+		UseCcache: *useCcache,
 
 		LogDir:   *buildLogsDir,
 		LogLevel: *logLevel,
