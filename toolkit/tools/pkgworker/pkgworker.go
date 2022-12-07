@@ -30,7 +30,7 @@ const (
 	chrootRpmBuildRoot      = "/usr/src/mariner"
 	chrootLocalRpmsDir      = "/localrpms"
 	chrootLocalRpmsCacheDir = "/upstream-cached-rpms"
-	chrootcCacheDir         = "/ccache-prototype"
+	chrootcCacheDir         = "/ccache-dir"
 )
 
 var (

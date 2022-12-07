@@ -122,7 +122,7 @@ install -p -m 644 -t %{buildroot}%{rcluadir}/srpm forge.lua
 
 %changelog
 * Mon Dec 05 2022 Andrew Phelps <anphel@microsoft.com> - 2.0-18
-- Add ccache support
+- Add support to build with ccache when 'mariner_ccache_enabled' is set.
 
 * Fri Oct 07 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.0-17
 - Adding macro to skip stripping of signatures.
