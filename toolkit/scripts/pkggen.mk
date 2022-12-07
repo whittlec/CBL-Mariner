@@ -49,6 +49,7 @@ clean-workplan: clean-cache clean-spec-parse
 	rm -rf $(LOGS_DIR)/pkggen/workplan
 clean-cache:
 	rm -rf $(CACHED_RPMS_DIR)
+	rm -rf $(CCACHE_DIR)
 	rm -f $(validate-pkggen-config)
 	@echo Verifying no mountpoints present in $(cache_working_dir)
 	$(SCRIPTS_DIR)/safeunmount.sh "$(cache_working_dir)" && \
