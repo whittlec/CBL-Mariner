@@ -1,7 +1,7 @@
 Summary:        Compiler Cache
 Name:           ccache
-Version:        4.6
-Release:        2%{?dist}
+Version:        4.7.4
+Release:        1%{?dist}
 License:        BeOpen AND BSD AND GPLv3+ AND (Patrick Powell's AND Holger Weiss' license) AND Public Domain AND Python AND zlib
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -32,8 +32,6 @@ for n in cc gcc g++ c++ ; do
     ln -sf ../../bin/ccache %{buildroot}%{_libdir}/ccache/$n
     ln -sf ../../bin/ccache %{buildroot}%{_libdir}/ccache/%{_host}-$n
 done
-ln -sf ../../bin/ccache %{buildroot}%{_libdir}/ccache/clang
-ln -sf ../../bin/ccache %{buildroot}%{_libdir}/ccache/clang++
 
 %check
 pushd build
@@ -48,6 +46,10 @@ popd
 %{_libdir}/*
 
 %changelog
+* Fri Dec 09 2022 Andrew Phelps <anphel@microsoft.com> - 4.7.4-1
+- Update to 4.7.4
+- Remove clang symlinks
+
 * Mon Aug 22 2022 Andrew Phelps <anphel@microsoft.com> - 4.6-2
 - Create symlinks to ccache
 - Lint spec

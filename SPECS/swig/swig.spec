@@ -1,7 +1,7 @@
 Summary:        Connects C/C++/Objective C to some high-level programming languages
 Name:           swig
 Version:        4.0.2
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        GPLv3+ AND BSD
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -49,10 +49,6 @@ pip3 install 2to3
 %install
 %make_install
 
-# Enable ccache-swig by default, if ccache is installed.
-mkdir -p %{buildroot}%{_libdir}/ccache
-ln -fs ../../bin/ccache-swig %{buildroot}%{_libdir}/ccache/swig
-
 %check
 %make_build check PY3=y
 
@@ -60,9 +56,11 @@ ln -fs ../../bin/ccache-swig %{buildroot}%{_libdir}/ccache/swig
 %license LICENSE LICENSE-GPL LICENSE-UNIVERSITIES
 %{_bindir}/*
 %{_datadir}/swig
-%{_libdir}/ccache
 
 %changelog
+* Fri Dec 09 2022 Andrew Phelps <anphel@microsoft.com> - 4.0.2-4
+- Remove ccache symlink
+
 * Tue Mar 01 2022 Bala <balakumaran.kannan@microsoft.com> - 4.0.2-3
 - BR python related packages and Boost for check
 - Install 2to3 for converting all test files to python3 compatible
